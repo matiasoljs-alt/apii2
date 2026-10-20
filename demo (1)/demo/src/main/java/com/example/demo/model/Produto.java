@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
-public class Produto extends com.example.demo.controller.Produto {
-
+public class Produto {
     private Long id;
     private String nome;
     private double preco;

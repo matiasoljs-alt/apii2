@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.controller.Produto;
+import com.example.demo.model.Produto;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ public class ProdutoRepository {
     private Long proximoId = 1L;
 
     public ProdutoRepository() {
-        dados.add(new com.example.demo.controller.Produto(proximoId++, "Teclado Mecânico", 250.0));
-        dados.add(new com.example.demo.controller.Produto(proximoId++, "Mouse Gamer", 120.0));
+        dados.add(new Produto(proximoId++, "Teclado Mecânico", 250.0));
+        dados.add(new Produto(proximoId++, "Mouse Gamer", 120.0));
         dados.add(new Produto(proximoId++, "Monitor 24 Pol", 890.0));
     }
 
@@ -29,7 +29,7 @@ public class ProdutoRepository {
                 .findFirst();
     }
 
-    public com.example.demo.model.Produto save(Produto produto){
+    public Produto save(Produto produto){
         if (produto.getId() == null){
             produto.setId(proximoId++);
             dados.add(produto);
@@ -38,7 +38,7 @@ public class ProdutoRepository {
             dados.add(produto);
         }
 
-        return (com.example.demo.model.Produto) produto;
+        return produto;
     }
 
     public  boolean deleteById(Long id) {

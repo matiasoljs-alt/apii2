@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.repository.ProdutoRepository;
+import com.example.demo.model.Produto;
 import com.example.demo.service.ProdutoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,30 +13,29 @@ import java.util.List;
 public class ProdutoController {
 
     private final ProdutoService service;
-    private ProdutoRepository repository;
 
     public ProdutoController(ProdutoService service) {
         this.service = service;
     }
 
     @GetMapping
-    public ResponseEntity<List<com.example.demo.model.Produto>> listar(@RequestParam(required = false) String nome) {
+    public ResponseEntity<List<Produto>> listar(@RequestParam(required = false) String nome) {
         return ResponseEntity.ok(service.listar(nome));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<com.example.demo.model.Produto> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<? extends Object> criar(@RequestBody ProdutoDTO dto) {
+    public ResponseEntity<?> criar(@RequestBody ProdutoDTO dto) {
         try {
             Produto criado = service.cadastrar(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(criado);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
